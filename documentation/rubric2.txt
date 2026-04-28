@@ -1,0 +1,31 @@
+  
+CN4005_Spring_2026  
+CN4005- Mental Wealth Professional Life 
+ 
+2. Grading Criteria: 
+Documentation 30  
+
+Business Plan including Project Overview and requirements scope 5 marks
+Financial Analysis, decision analysis  10 marks
+Tasks Planning and risks analysis   15 marks
+
+Implementations 30  
+
+Process automation crud screens (not less than 4 screens) 5 marks  
+Configuration management and version control 5  marks
+Requirements mapping monitoring procedures  5  marks
+KPIs, Burn Down chart, Velocity Chart Automation using Dashboards  15 marks
+ 
+ N.B. Deliverables of the tasks implementation plan should be covering the project time 
+line, critical path, resources planning and tasks assignments, backlog simulation, and 
+simulating running sprints   
+
+details needed:
+Instructor Signature:   
+Project Name  
+Online Website address  
+GitHub Link If Available 
+Jira link  
+ 
+________ 
+60 

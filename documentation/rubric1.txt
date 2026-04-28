@@ -1,0 +1,49 @@
+EUE | UEL — Individual Grading Sheet
+Cybersecurity Programme  ·  Web Development Project
+University: EUE — UEL Egypt
+Academic Year: 2024 / 2025
+Semester: Spring
+Date: _____ / _____ / _______
+STUDENT NAME STUDENT ID
+UEL MOODLE EMAIL (UXXXXXXX@UEL.AC.UK) EUE EMAIL (NAME.SUR25@UEL.EUE.EDU.EG)
+TEAM NAME PROJECT TITLE
+SUB-TASK MAX SCORE
+🎨  1 — UI/UX Design & Stitch (25 pts)
+Design System & Wireframes 13
+Responsive Design 12
+💻  2 — Frontend / Next.js (25 pts)
+Component Architecture 13
+Routing, States & SEO 12
+🛠  3 — Backend / Supabase (20 pts)
+API & Database Integration 10
+Auth & Security (RLS) 10
+🔗  4 — Code Quality & GitHub (15 pts)
+Git History & README 8
+Deployment (Vercel) 7
+🎤  5 — Presentation & Demo (15 pts)
+Live Demo & Explanation 8
+Communication & Q&A 7
+UI/UX Design & Stitch _____ / 25
+Frontend / Next.js _____ / 25
+Backend / Supabase _____ / 20
+Code Quality & GitHub _____ / 15
+Presentation & Demo _____ / 15
+★  TOTAL GRADE _____ / 100
+
+EVALUATOR COMMENTS & FEEDBACK
+DR. MOATAZ SAMY (INSTRUCTOR) T.A STEVEN STUDENT SIGNATURE DATE
+EUE — University of East London Egypt  ·  Cybersecurity — Web Development Dr. Moataz Samy & T.A Steven  ·  Spring 2025
+
+this is my note: the chosen porject is a Security Tool:
+Hash Generator & Verifier
+Tool for generating and verifying file/text hashes with support for MD5, SHA-1, SHA-256, and SHA-512.
+
+ Required Features:
+Drag-and-drop file hashing
+Text hash generation
+Hash comparison tool
+Hash history stored in Supabase
+
+save this extremly important:"i aready started the project with antigravity agent and i already build the wireframes with stitch. i want the project to be very simple and light to met the requerments and the expectations is in the next day so make things simple no heavy algorithms or advanced tichnologies"
+i will give you a pdf that contains a plan the docor put to follow to make the project, but you don't have to follow it exactlry if it will be advanced or hard to be applied
+ 

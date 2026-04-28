@@ -1,0 +1,24 @@
+# Task List: HashVault Implementation
+
+- `[/]` Phase 1: Project Initialization & Structure
+  - `[ ]` Run `npx create-next-app@latest` in non-interactive mode.
+  - `[ ]` Ensure `src/app` and `src/components` folders are created.
+  - `[ ]` Configure Tailwind CSS with design tokens from `ui_templates/cyber_precision_modern/DESIGN.md`.
+- `[ ]` Phase 2: Database & Backend Setup
+  - `[ ]` Install `@supabase/ssr` and `@supabase/supabase-js`.
+  - `[ ]` Set up Supabase client in Next.js.
+  - `[ ]` Provide SQL script for database creation.
+- `[ ]` Phase 3: Authentication & Security
+  - `[ ]` Implement React components for Login and Signup.
+  - `[ ]` Set up Next.js Middleware for protected routes.
+- `[ ]` Phase 4: Core Hash Functionality
+  - `[ ]` Implement Client-side hashing (using Web Crypto API and crypto-js for MD5).
+  - `[ ]` Save hashes to Supabase.
+  - `[ ]` Implement Hash Comparison tool.
+- `[ ]` Phase 5: Dashboards & CRUD Screens
+  - `[ ]` Implement Hash History CRUD screen.
+  - `[ ]` Implement Admin Analytics dashboard.
+  - `[ ]` Implement Configuration Management screen.
+- `[ ]` Phase 6: Polish & Integration
+  - `[ ]` Connect navigation links.
+  - `[ ]` Final UI polish.
