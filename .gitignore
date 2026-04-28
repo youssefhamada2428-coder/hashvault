@@ -40,3 +40,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+documentation/
+RUBRIC1_MAPPING.md
+RUBRIC2_MAPPING.md
