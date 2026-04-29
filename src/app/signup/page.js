@@ -3,24 +3,61 @@
 import { useState } from 'react';
 import { signUpUser, signInUser } from '@/lib/api';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 // Renders the signup form page
 export default function Signup() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Validate email format
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
 
   // Handle user account creation and authentication
   const handleSignup = async (e) => {
     e.preventDefault();
+    setError('');
+    setSuccess('');
+
+    // Basic validation
+    if (!validateEmail(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    setIsLoading(true);
     try {
       await signUpUser(email, password);
+      // Automatically sign in after signup
       await signInUser(email, password);
-      window.location.href = '/';
+      setSuccess('Account created successfully! Redirecting...');
+      router.push('/');
+      router.refresh();
     } catch (err) {
-      setError(err.message);
-      setSuccess('');
+      console.error("Signup error:", err);
+      // Map common Supabase errors
+      if (err.message?.includes('User already registered')) {
+        setError('This email is already registered. Please try logging in.');
+      } else {
+        setError(err.message || 'An error occurred during signup.');
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -50,8 +87,22 @@ export default function Signup() {
             required 
           />
         </div>
-        <button type="submit" className="w-full bg-primary-container text-on-primary-container p-2 rounded font-bold hover:bg-primary-fixed transition-colors">
-          Sign Up
+        <div>
+          <label className="block text-sm mb-1 text-on-surface-variant">Confirm Password</label>
+          <input 
+            type="password" 
+            value={confirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
+            className="w-full bg-surface-dim border border-outline-variant rounded p-2 text-on-surface" 
+            required 
+          />
+        </div>
+        <button 
+          type="submit" 
+          disabled={isLoading}
+          className="w-full bg-primary-container text-on-primary-container p-2 rounded font-bold hover:bg-primary-fixed transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isLoading ? 'Creating account...' : 'Sign Up'}
         </button>
       </form>
       <p className="mt-4 text-center text-sm text-on-surface-variant">
@@ -60,5 +111,3 @@ export default function Signup() {
     </div>
   );
 }
-
-

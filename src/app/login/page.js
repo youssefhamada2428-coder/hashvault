@@ -3,21 +3,51 @@
 import { useState } from 'react';
 import { signInUser } from '@/lib/api';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 // Renders the login form page
 export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Validate email format
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
 
   // Handle user authentication login
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError('');
+    
+    // Basic validation
+    if (!validateEmail(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+
+    setIsLoading(true);
     try {
       await signInUser(email, password);
-      window.location.href = '/';
+      router.push('/');
+      router.refresh(); // Ensure session state is updated
     } catch (err) {
-      setError(err.message);
+      console.error("Login error:", err);
+      // Map common Supabase errors to user-friendly messages
+      if (err.message?.includes('Invalid login credentials')) {
+        setError('Invalid email or password. Please try again.');
+      } else {
+        setError(err.message || 'An unexpected error occurred. Please try again.');
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
