@@ -6,12 +6,14 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, L
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
+// Renders the hash history page
 export default function HashHistory() {
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
+  // Handle user authentication and redirect if not logged in
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -25,6 +27,7 @@ export default function HashHistory() {
     checkAuth();
   }, [router]);
 
+  // Fetch user history from Supabase
   const fetchHistory = async () => {
     try {
       setIsLoading(true);

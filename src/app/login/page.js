@@ -4,11 +4,13 @@ import { useState } from 'react';
 import { signInUser } from '@/lib/api';
 import Link from 'next/link';
 
+// Renders the login form page
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  // Handle user authentication login
   const handleLogin = async (e) => {
     e.preventDefault();
     try {

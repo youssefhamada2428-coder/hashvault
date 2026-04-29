@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import CryptoJS from 'crypto-js';
 import { addHashEntry } from '@/lib/api';
 
+// Renders the file hashing page
 export default function FileHasher() {
   const [file, setFile] = useState(null);
   const [algorithm, setAlgorithm] = useState('sha256');
@@ -39,6 +40,7 @@ export default function FileHasher() {
     setOutputHash('');
   };
 
+  // Handle file hashing logic and Supabase API calls
   const generateHash = async () => {
     if (!file) return;
     setIsGenerating(true);

@@ -4,12 +4,14 @@ import { useState } from 'react';
 import { signUpUser, signInUser } from '@/lib/api';
 import Link from 'next/link';
 
+// Renders the signup form page
 export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  // Handle user account creation and authentication
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
@@ -58,3 +60,5 @@ export default function Signup() {
     </div>
   );
 }
+
+

@@ -4,12 +4,14 @@ import { useState } from 'react';
 import CryptoJS from 'crypto-js';
 import { addHashEntry } from '@/lib/api';
 
+// Renders the text hashing page
 export default function HashGeneratorHome() {
   const [inputText, setInputText] = useState('');
   const [algorithm, setAlgorithm] = useState('sha256');
   const [outputHash, setOutputHash] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
 
+  // Handle text hashing logic and Supabase API calls
   const generateHash = async () => {
     if (!inputText) return;
     setIsGenerating(true);

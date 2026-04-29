@@ -5,9 +5,11 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { signOutUser } from '@/lib/api';
 
+// Renders the top navigation bar component
 export default function TopNavBar() {
   const [user, setUser] = useState(null);
 
+  // Handle auth state changes
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => setUser(data.user));
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -16,6 +18,7 @@ export default function TopNavBar() {
     return () => authListener.subscription.unsubscribe();
   }, []);
 
+  // Handle user logout
   const handleLogout = async () => {
     await signOutUser();
     window.location.href = '/';

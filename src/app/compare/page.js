@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { getComparisonLogs, addComparisonLog } from '@/lib/api';
 
+// Renders the hash comparison page
 export default function CompareTool() {
   const [hash1, setHash1] = useState('');
   const [hash2, setHash2] = useState('');
@@ -13,6 +14,7 @@ export default function CompareTool() {
     fetchLogs();
   }, []);
 
+  // Fetch comparison history from Supabase
   const fetchLogs = async () => {
     try {
       const data = await getComparisonLogs();
@@ -22,6 +24,7 @@ export default function CompareTool() {
     }
   };
 
+  // Handle hash comparison logic and log to Supabase
   const handleCompare = async () => {
     if (!hash1 || !hash2) return;
     
