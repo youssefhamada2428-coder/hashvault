@@ -51,7 +51,7 @@ export default function HashGeneratorHome() {
       <div className="mb-lg flex justify-between items-end">
         <div>
           <h2 className="font-headline-md text-headline-md text-on-surface">Cryptographic Hash Generator</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Generate deterministic hashes from strings.</p>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Generate deterministic hashes from strings. Safe and secure client-side computation ensuring your raw text never leaves the browser.</p>
         </div>
       </div>
       

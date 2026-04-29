@@ -2,21 +2,58 @@ import { supabase } from './supabase'
 
 // Hash History CRUD
 export async function getHashHistory() {
-  const { data, error } = await supabase
-    .from('hash_history')
-    .select('*')
-    .order('created_at', { ascending: false })
+  const { data: { user } } = await supabase.auth.getUser()
+  let query = supabase.from('hash_history').select('*').order('created_at', { ascending: false })
+  
+  if (user) {
+    query = query.eq('user_id', user.id)
+  }
+  
+  const { data, error } = await query
   if (error) throw error
   return data
 }
 
 export async function addHashEntry(entry) {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (user) {
+    entry.user_id = user.id
+  }
   const { data, error } = await supabase
     .from('hash_history')
     .insert([entry])
     .select()
   if (error) throw error
   return data[0]
+}
+
+export async function updateHashEntry(id, updates) {
+  const { data, error } = await supabase
+    .from('hash_history')
+    .update(updates)
+    .eq('id', id)
+    .select()
+  if (error) throw error
+  return data[0]
+}
+
+// Auth
+export async function signUpUser(email, password) {
+  const { data, error } = await supabase.auth.signUp({ email, password })
+  if (error) throw error
+  return data
+}
+
+export async function signInUser(email, password) {
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+  if (error) throw error
+  return data
+}
+
+export async function signOutUser() {
+  const { error } = await supabase.auth.signOut()
+  if (error) throw error
+  return true
 }
 
 export async function deleteHashEntry(id) {

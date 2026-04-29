@@ -8,8 +8,8 @@ export default function HomePage() {
           <span className="material-symbols-outlined text-[40px]" style={{ fontVariationSettings: "'FILL' 1" }}>security</span>
           HashVault
         </h1>
-        <p className="font-body-lg text-on-surface-variant text-xl">
-          Secure, deterministic cryptographic hashing and verification tool.
+        <p className="font-body-lg text-on-surface-variant text-xl max-w-2xl mx-auto">
+          Secure, deterministic cryptographic hashing and verification tool. Protect data integrity by generating one-way hashes locally in your browser.
         </p>
       </div>
 

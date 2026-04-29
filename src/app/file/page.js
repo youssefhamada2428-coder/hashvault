@@ -127,7 +127,7 @@ export default function FileHasher() {
       <div className="mb-lg flex justify-between items-end">
         <div>
           <h2 className="font-headline-md text-headline-md text-on-surface">File Hashing Engine</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Generate deterministic hashes from local files.</p>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Generate deterministic hashes from local files without uploading them to any server, preserving complete privacy.</p>
         </div>
       </div>
       
