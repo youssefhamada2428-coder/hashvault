@@ -2,6 +2,10 @@ import { supabase } from './supabase'
 
 // Hash History CRUD
 export async function getHashHistory() {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const { data: { user } } = await supabase.auth.getUser()
   let query = supabase.from('hash_history').select('*').order('created_at', { ascending: false })
   
@@ -15,6 +19,10 @@ export async function getHashHistory() {
 }
 
 export async function addHashEntry(entry) {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const { data: { user } } = await supabase.auth.getUser()
   if (user) {
     entry.user_id = user.id
@@ -28,6 +36,10 @@ export async function addHashEntry(entry) {
 }
 
 export async function updateHashEntry(id, updates) {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const { data, error } = await supabase
     .from('hash_history')
     .update(updates)
@@ -39,24 +51,40 @@ export async function updateHashEntry(id, updates) {
 
 // Auth
 export async function signUpUser(email, password) {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const { data, error } = await supabase.auth.signUp({ email, password })
   if (error) throw error
   return data
 }
 
 export async function signInUser(email, password) {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const { data, error } = await supabase.auth.signInWithPassword({ email, password })
   if (error) throw error
   return data
 }
 
 export async function signOutUser() {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const { error } = await supabase.auth.signOut()
   if (error) throw error
   return true
 }
 
 export async function deleteHashEntry(id) {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const { error } = await supabase
     .from('hash_history')
     .delete()
@@ -67,6 +95,10 @@ export async function deleteHashEntry(id) {
 
 // Comparison Logs CRUD
 export async function getComparisonLogs() {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const { data, error } = await supabase
     .from('comparison_logs')
     .select('*')
@@ -76,6 +108,10 @@ export async function getComparisonLogs() {
 }
 
 export async function addComparisonLog(log) {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const { data, error } = await supabase
     .from('comparison_logs')
     .insert([log])
@@ -86,6 +122,10 @@ export async function addComparisonLog(log) {
 
 // Configurations CRUD
 export async function getConfigurations() {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const { data, error } = await supabase
     .from('configurations')
     .select('*')
@@ -94,6 +134,10 @@ export async function getConfigurations() {
 }
 
 export async function addConfiguration(config) {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const { data, error } = await supabase
     .from('configurations')
     .insert([config])
@@ -103,6 +147,10 @@ export async function addConfiguration(config) {
 }
 
 export async function updateConfiguration(id, updates) {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const { data, error } = await supabase
     .from('configurations')
     .update(updates)
@@ -113,6 +161,10 @@ export async function updateConfiguration(id, updates) {
 }
 
 export async function deleteConfiguration(id) {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const { error } = await supabase
     .from('configurations')
     .delete()
@@ -123,6 +175,10 @@ export async function deleteConfiguration(id) {
 
 // Analytics helpers (simple db counts)
 export async function getAnalytics() {
+  if (!supabase) {
+    console.warn("Supabase not initialized")
+    return null
+  }
   const [{ count: historyCount }, { count: comparisonCount }] = await Promise.all([
     supabase.from('hash_history').select('*', { count: 'exact', head: true }),
     supabase.from('comparison_logs').select('*', { count: 'exact', head: true })
