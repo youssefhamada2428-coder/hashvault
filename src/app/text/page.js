@@ -15,27 +15,30 @@ export default function HashGeneratorHome() {
   const generateHash = async () => {
     if (!inputText) return;
     setIsGenerating(true);
-    
+
     let hash = '';
     const start = performance.now();
-    
+
     try {
-      if (algorithm === 'sha256') hash = CryptoJS.SHA256(inputText).toString();
-      else if (algorithm === 'sha512') hash = CryptoJS.SHA512(inputText).toString();
-      else if (algorithm === 'sha1') hash = CryptoJS.SHA1(inputText).toString();
-      else if (algorithm === 'md5') hash = CryptoJS.MD5(inputText).toString();
+      const inputStr = String(inputText);
+      const words = CryptoJS.enc.Utf8.parse(inputStr);
+
+      if (algorithm === 'sha256') hash = CryptoJS.SHA256(words).toString();
+      else if (algorithm === 'sha512') hash = CryptoJS.SHA512(words).toString();
+      else if (algorithm === 'sha1') hash = CryptoJS.SHA1(words).toString();
+      else if (algorithm === 'md5') hash = CryptoJS.MD5(words).toString();
       
       const end = performance.now();
-      
+
       setOutputHash(hash);
-      
+
       // Save to Supabase
       await addHashEntry({
         hash_value: hash,
         algorithm: algorithm,
         source_type: 'text'
       });
-      
+
     } catch (e) {
       console.error("Supabase Error Details:", e);
       if (e?.code === '42501' || e?.message?.includes('row-level security')) {
@@ -56,7 +59,7 @@ export default function HashGeneratorHome() {
           <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Generate deterministic hashes from strings. Safe and secure client-side computation ensuring your raw text never leaves the browser.</p>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-md mt-6">
         <div className="col-span-1 lg:col-span-8 space-y-md">
           <div className="bg-surface-container-low border border-outline-variant rounded-lg flex flex-col">
@@ -68,16 +71,16 @@ export default function HashGeneratorHome() {
               <button onClick={() => setInputText('')} className="text-xs text-primary hover:text-primary-fixed transition-colors">Clear</button>
             </div>
             <div className="p-sm flex-1">
-              <textarea 
+              <textarea
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                className="w-full h-32 bg-surface-dim border border-outline-variant rounded p-3 font-code-sm text-code-sm text-on-surface placeholder-outline focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all resize-none shadow-inner" 
+                className="w-full h-32 bg-surface-dim border border-outline-variant rounded p-3 font-code-sm text-code-sm text-on-surface placeholder-outline focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all resize-none shadow-inner"
                 placeholder="Enter text string to hash...">
               </textarea>
             </div>
           </div>
         </div>
-        
+
         <div className="col-span-1 lg:col-span-4 space-y-md">
           <div className="bg-surface-container border border-outline-variant rounded-lg p-sm">
             <h3 className="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-2 mb-sm">
@@ -88,7 +91,7 @@ export default function HashGeneratorHome() {
               <div>
                 <label className="block font-label-caps text-[10px] text-outline mb-1">ALGORITHM</label>
                 <div className="relative">
-                  <select 
+                  <select
                     value={algorithm}
                     onChange={(e) => setAlgorithm(e.target.value)}
                     className="w-full bg-surface-dim border border-outline-variant rounded py-2 pl-3 pr-10 font-body-sm text-on-surface appearance-none focus:border-primary-container focus:ring-1 focus:ring-primary-container">
@@ -101,7 +104,7 @@ export default function HashGeneratorHome() {
               </div>
             </div>
           </div>
-          <button 
+          <button
             onClick={generateHash}
             disabled={isGenerating || !inputText}
             className="w-full bg-primary-container text-on-primary-container hover:bg-primary-fixed disabled:opacity-50 transition-colors py-3 rounded-lg font-label-caps text-label-caps flex items-center justify-center gap-2">
@@ -124,7 +127,7 @@ export default function HashGeneratorHome() {
               <code className="font-code-sm text-code-sm text-secondary-fixed break-all max-w-[85%] select-all">
                 {outputHash}
               </code>
-              <button 
+              <button
                 onClick={() => navigator.clipboard.writeText(outputHash)}
                 className="p-2 text-outline hover:text-primary-container hover:bg-surface-variant rounded transition-colors" title="Copy to clipboard">
                 <span className="material-symbols-outlined">content_copy</span>
