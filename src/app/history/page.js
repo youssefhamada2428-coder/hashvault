@@ -3,14 +3,27 @@
 import { useState, useEffect } from 'react';
 import { getHashHistory, deleteHashEntry, updateHashEntry } from '@/lib/api';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid } from 'recharts';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 
 export default function HashHistory() {
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    fetchHistory();
-  }, []);
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        router.push('/login');
+      } else {
+        setIsAuthenticated(true);
+        fetchHistory();
+      }
+    };
+    checkAuth();
+  }, [router]);
 
   const fetchHistory = async () => {
     try {
@@ -71,6 +84,8 @@ export default function HashHistory() {
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState('');
 
+  if (!isAuthenticated) return null;
+
   return (
     <div className="max-w-container-max mx-auto w-full">
       <div className="flex items-end justify-between border-b border-outline-variant/30 pb-sm mb-6">
@@ -90,12 +105,12 @@ export default function HashHistory() {
                 <BarChart data={getChartData()}>
                   <XAxis dataKey="name" stroke="#8884d8" fontSize={12} />
                   <YAxis allowDecimals={false} stroke="#8884d8" fontSize={12} />
-                  <Tooltip cursor={{fill: 'transparent'}} contentStyle={{backgroundColor: '#1E293B', border: 'none'}} />
+                  <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ backgroundColor: '#1E293B', border: 'none' }} />
                   <Bar dataKey="count" fill="#4ADE80" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
-            
+
             <div className="bg-surface-container-low border border-outline-variant rounded-xl p-6 h-64">
               <h4 className="font-label-caps text-on-surface-variant mb-4 text-sm">Hash Activity Over Time</h4>
               <ResponsiveContainer width="100%" height="100%">
@@ -103,7 +118,7 @@ export default function HashHistory() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
                   <XAxis dataKey="date" stroke="#8884d8" fontSize={12} />
                   <YAxis allowDecimals={false} stroke="#8884d8" fontSize={12} />
-                  <Tooltip contentStyle={{backgroundColor: '#1E293B', border: 'none'}} />
+                  <Tooltip contentStyle={{ backgroundColor: '#1E293B', border: 'none' }} />
                   <Line type="monotone" dataKey="count" stroke="#60A5FA" strokeWidth={2} dot={{ fill: '#60A5FA', r: 4 }} />
                 </LineChart>
               </ResponsiveContainer>
@@ -140,9 +155,9 @@ export default function HashHistory() {
                     <span className="material-symbols-outlined text-[16px] text-slate-500">description</span>
                     {editingId === item.id ? (
                       <div className="flex items-center gap-2">
-                        <input 
-                          type="text" 
-                          value={editValue} 
+                        <input
+                          type="text"
+                          value={editValue}
                           onChange={(e) => setEditValue(e.target.value)}
                           className="bg-surface-dim border border-primary text-on-surface rounded px-2 py-1 text-sm max-w-[100px]"
                           autoFocus
