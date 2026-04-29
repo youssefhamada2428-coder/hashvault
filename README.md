@@ -8,7 +8,7 @@ A web-based tool for generating and verifying hashes for both text and files, wi
 
 * 🔹 Text Hashing (MD5, SHA-256, etc.)
 * 🔹 File Hashing
-* 🔹 Hash Comparison (Match / Not Match)
+* 🔹 Hash Comparison (Match / Not Match with Similarity Percentage)
 * 🔹 File Upload Support
 * 🔹 User Authentication (Login / Signup)
 * 🔹 Error Handling & Input Validation
@@ -42,10 +42,10 @@ Open: http://localhost:3000
 ###  Mostafa Yasser Abdelfattah Ewis  
 
 * Implemented and improved hashing logic (text)
-* Enhanced hash comparison functionality
+* Enhanced hash comparison functionality 
 * Designed UI and pages
 * Setup project structure
-* Improved authentication system (login/signup)
+* Improved authentication system validation (login/signup)
 
 ###  Yousef Hamada Yousef Issa
 
@@ -53,7 +53,6 @@ Open: http://localhost:3000
 * Improved file upload processing
 * Integrated frontend with backend
 * Implemented and improved hashing logic (file)
-* Added validation and error handling
 * Add history tracking for hashes
 
 
