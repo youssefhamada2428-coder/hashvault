@@ -8,11 +8,51 @@ export default function CompareTool() {
   const [hash1, setHash1] = useState('');
   const [hash2, setHash2] = useState('');
   const [result, setResult] = useState(null);
+  const [similarity, setSimilarity] = useState(null);
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
     fetchLogs();
   }, []);
+
+  // Calculate string similarity using Levenshtein distance
+  const calculateSimilarity = (s1, s2) => {
+    if (!s1 || !s2) return 0;
+    if (s1 === s2) return 100;
+    
+    const l1 = s1.length;
+    const l2 = s2.length;
+    
+    // Performance optimization: cap similarity calculation for very large inputs
+    if (l1 > 2000 || l2 > 2000) {
+      // Fallback to simpler character distribution overlap for performance
+      const set1 = new Set(s1.split(''));
+      const set2 = new Set(s2.split(''));
+      const intersection = new Set([...set1].filter(x => set2.has(x)));
+      const union = new Set([...set1, ...set2]);
+      return Math.floor((intersection.size / union.size) * 100);
+    }
+
+    let prevRow = Array(l2 + 1).fill(0).map((_, i) => i);
+    let currRow = Array(l2 + 1);
+
+    for (let i = 1; i <= l1; i++) {
+      currRow[0] = i;
+      for (let j = 1; j <= l2; j++) {
+        const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+        currRow[j] = Math.min(
+          prevRow[j] + 1,
+          currRow[j - 1] + 1,
+          prevRow[j - 1] + cost
+        );
+      }
+      prevRow = [...currRow];
+    }
+    
+    const distance = prevRow[l2];
+    const maxLen = Math.max(l1, l2);
+    return Math.floor((1 - distance / maxLen) * 100);
+  };
 
   // Fetch comparison history from Supabase
   const fetchLogs = async () => {
@@ -30,6 +70,13 @@ export default function CompareTool() {
     
     const isMatch = hash1 === hash2;
     setResult(isMatch);
+    
+    // Calculate similarity if not matching
+    if (!isMatch) {
+      setSimilarity(calculateSimilarity(hash1, hash2));
+    } else {
+      setSimilarity(null);
+    }
     
     try {
       await addComparisonLog({
@@ -92,6 +139,11 @@ export default function CompareTool() {
             <span className="material-symbols-outlined">{result ? 'check_circle' : 'cancel'}</span>
             {result ? 'HASHES MATCH' : 'HASHES DO NOT MATCH'}
           </h3>
+          {!result && similarity !== null && (
+            <div className="mt-3 font-medium opacity-90">
+              Similarity: {similarity}%
+            </div>
+          )}
         </div>
       )}
 
@@ -116,7 +168,10 @@ export default function CompareTool() {
                 <td className="px-sm py-3 text-center">
                   {log.match_status ? 
                     <span className="text-secondary bg-secondary/10 px-2 py-1 rounded">MATCH</span> : 
-                    <span className="text-error bg-error/10 px-2 py-1 rounded">MISMATCH</span>
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="text-error bg-error/10 px-2 py-1 rounded">MISMATCH</span>
+                      <span className="text-[10px] opacity-70 font-medium">Sim: {calculateSimilarity(log.hash_1, log.hash_2)}%</span>
+                    </div>
                   }
                 </td>
                 <td className="px-sm py-3 text-on-surface-variant font-code-sm text-code-sm">
