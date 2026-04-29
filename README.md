@@ -1,39 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#  HashVault 
+
+A web-based tool for generating and verifying hashes for both text and files, with comparison and authentication features.
+
+---
+
+##  Features
+
+* 🔹 Text Hashing (MD5, SHA-256, etc.)
+* 🔹 File Hashing
+* 🔹 Hash Comparison (Match / Not Match)
+* 🔹 File Upload Support
+* 🔹 User Authentication (Login / Signup)
+* 🔹 Error Handling & Input Validation
+* 🔹 History tracking
+---
+
+##  Tech Stack
+
+* Frontend: Next.js
+* Backend: Node.js / API Routes
+* Styling: CSS / Tailwind (if used)
+* Authentication: (specify if using Supabase or custom)
+
+---
 
 ## Getting Started
 
-First, run the development server:
+Run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open: http://localhost:3000
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+##  Team Contributions
 
-## Learn More
+###  Mostafa Yasser Abdelfattah Ewis  
 
-To learn more about Next.js, take a look at the following resources:
+* Implemented and improved hashing logic (text)
+* Enhanced hash comparison functionality
+* Designed UI and pages
+* Setup project structure
+* Improved authentication system (login/signup)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+###  Yousef Hamada Yousef Issa
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* Built authentication system (login/signup)
+* Improved file upload processing
+* Integrated frontend with backend
+* Implemented and improved hashing logic (file)
+* Added validation and error handling
+* Add history tracking for hashes
 
 
 
+---
+
+##  Notes
+
+This project was developed as a university Project
+
+---
+
+##  Future Improvements
+
+* Add more hashing algorithms
+* Improve UI/UX
+* Enhance security
+
+---
